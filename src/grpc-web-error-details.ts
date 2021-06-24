@@ -53,14 +53,14 @@ export function statusFromError(
   if (
     !(
       "metadata" in err &&
-      "grpc-status-details-bin" in err["metadata"] &&
-      typeof err.metadata["grpc-status-details-bin"] === "string"
+      err["metadata"].get("grpc-status-details-bin") &&
+      typeof err["metadata"].get("grpc-status-details-bin") === "string"
     )
   ) {
     // if the error does not contain status, return null
     return [null, null];
   }
-  const statusDetailsBinStr = err.metadata["grpc-status-details-bin"];
+  const statusDetailsBinStr = err["metadata"].get("grpc-status-details-bin");
 
   let bytes: Uint8Array;
   try {
